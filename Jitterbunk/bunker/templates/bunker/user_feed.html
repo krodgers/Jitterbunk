@@ -1,2 +1,14 @@
 <h1> Test </h1>
 <h1> {{ userprofile.user}} </h1>
+
+<h3>TO: </h3>
+{% for toMe in  users_list.to_user.all %}
+    <p>{{ toMe.to_user }} BUNKED {{ toMe.from_user }}</p>
+{% endfor %}
+
+
+<h3>FROM:</h3>
+{% for fromMe in  users_list.from_user.all %}
+  <p>  {{ fromMe.to_user }} BUNKED {{ fromMe.from_user }}</p>
+{% endfor %}
+

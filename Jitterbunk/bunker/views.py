@@ -24,6 +24,7 @@ class IndexView(generic.ListView):
 class UserFeedView(generic.DetailView):
     model = UserProfile
     template_name = 'bunker/user_feed.html'
+    context_object_name = 'users_list'
 
     def get_queryset(self):
         return UserProfile.objects.all()
