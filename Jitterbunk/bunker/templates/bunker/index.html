@@ -1,6 +1,15 @@
-<h1> This be the index </h1>
+<h1> Current Bunks </h1>
 
-{{ user_list }}
-{% for u in user_list %}
-    <h3> {{ u}} </h3>
+<section>
+{% for bunk in bunk_list %}
+    <div> 
+    <a href= "{% url 'user_feed' bunk.from_user.id %}">
+        {{bunk.from_user}} 
+    </a>
+    BUNKED
+    <a href="{% url 'user_feed' bunk.to_user.id %}">
+        {{ bunk.to_user }}
+    </a>
+     @ {{bunk.time}} </div>
 {% endfor %}
+</section>

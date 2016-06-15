@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views import generic
+from django.contrib.auth.models import User
 
 from .models import Bunk, UserProfile
 
@@ -8,15 +9,15 @@ from .models import Bunk, UserProfile
 
 
 class IndexView(generic.ListView):
-    model = UserProfile
+    model = Bunk
     template_name = 'bunker/index.html'
-    context_object_name = 'user_list'
+    context_object_name = 'bunk_list'
 
     def get_queryset(self):
         """
         Return a full list of recent bunk
         """
-        return UserProfile.objects.all()
+        return Bunk.objects.all()
         # TODO:: only show some of most recent ones
 
 
