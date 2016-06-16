@@ -1,0 +1,6 @@
+
+<form action="/bunker/{{user_id}}/add_bunk/" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Submit" />
+</form>
