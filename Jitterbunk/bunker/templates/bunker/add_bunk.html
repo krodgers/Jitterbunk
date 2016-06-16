@@ -1,6 +1,14 @@
 
+{% if user.is_authenticated %}
+
 <form action="/bunker/{{user_id}}/add_bunk/" method="post">
     {% csrf_token %}
     {{ form }}
     <input type="submit" value="Submit" />
 </form>
+
+{% else %}
+<h1> Nope. You have to be logged in to see this page. </h1>
+<a href="{% url 'login' %}">Log In</a>
+
+{% endif %}

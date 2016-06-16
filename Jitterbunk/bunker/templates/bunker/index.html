@@ -1,15 +1,34 @@
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'bunker/styles.css' %}">
+
+{% if user.is_authenticated %}
 <h1> Current Bunks </h1>
 
 <section>
 {% for bunk in bunk_list %}
     <div> 
+    <img src="{{ bunk.from_user.photo.url }}">
     <a href= "{% url 'user_feed' bunk.from_user.id %}">
         {{bunk.from_user}} 
     </a>
     BUNKED
+
+    <img src="{{ bunk.to_user.photo.url }}">
+
     <a href="{% url 'user_feed' bunk.to_user.id %}">
         {{ bunk.to_user }}
     </a>
-     @ {{bunk.time}} </div>
+     @ {{bunk.time|date:"d F Y f a"}} </div>
 {% endfor %}
 </section>
+
+<footer>
+    <a href="{% url 'logout' %}">Log Out</a>
+</footer>
+
+{% else %}
+<h1> Nope. You have to be logged in to see this page. </h1>
+<a href="{% url 'django.contrib.auth.views.login' %}">Log In</a>
+
+{% endif %}
+
