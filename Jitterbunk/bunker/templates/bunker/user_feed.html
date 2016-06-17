@@ -1,30 +1,38 @@
 {% load staticfiles %}
 <link rel="stylesheet" type="text/css" href="{% static 'bunker/styles.css' %}">
 
-{% if user.is_authenticated %}
+{% if user.is_authenticated and usr.user.id == user.id %}
 
-<img class="displayPic" src="{{ usr.photo.url }}">
-    
-<h1> {{ usr.user }}'s Feed </h1>
+    <img class="displayPic" src="{{ usr.photo.url }}">
+        
+    <h1> {{ usr.user }}'s Feed </h1>
 
-<h3>You were Bunked by:</h3>
-{% for toMe in usr.to_user.all %}
-    <p>{{ toMe.from_user }} on {{ toMe.time|date:"d F Y f a"}}</p>
-{% endfor %}
+    <h3>You were Bunked by:</h3>
+    {% for toMe in usr.to_user.all %}
+        <p>{{ toMe.from_user }} on {{ toMe.time|date:"d F Y f a"}}</p>
+    {% endfor %}
 
 
-<h3>You Bunked:</h3>
-{% for fromMe in  usr.from_user.all %}
-  <p> {{ fromMe.to_user }} on {{ fromMe.time|date:"d F Y f a" }}</p>
-{% endfor %}
+    <h3>You Bunked:</h3>
+    {% for fromMe in  usr.from_user.all %}
+      <p> {{ fromMe.to_user }} on {{ fromMe.time|date:"d F Y f a" }}</p>
+    {% endfor %}
 
-<footer>
-<a href="{% url 'add_bunk' usr.id %}">Bunk someone now!</a>
-</footer>
+    <footer>
+    <a href="{% url 'add_bunk' usr.id %}">Bunk someone now!</a>
+    </footer>
+
 
 
 {% else %}
-<h1> Nope. You have to be logged in to see this page. </h1>
-<a href="{% url 'login' %}">Log In</a>
+
+    {% if user.id != usr.user.id %}
+        <h1> You can't see other people's private feeds </h1>
+
+    {% else %}
+        <h1> Nope. You have to be logged in to see this page. </h1>
+    <a href="{% url 'login' %}">Log In</a>
+
+    {% endif %}
 
 {% endif %}

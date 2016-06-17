@@ -21,7 +21,7 @@ class IndexView(generic.ListView):
         """
         Return a full list of recent bunk
         """
-        return Bunk.objects.all()
+        return Bunk.objects.order_by('-time')
         # TODO:: only show some of most recent ones
 
 #@login_required
@@ -49,7 +49,9 @@ def add_bunk(request, user_id):
                 b.to_user = UserProfile.objects.get(pk=request.POST['who_to_bunk'])
                 b.time = timezone.now()
                 b.save()
-                return render(request, 'bunker/bunked.html', {'user_name':bunker.user.username})
+                return render(request, 'bunker/bunked.html', {
+                    'user_name':b.to_user.user.username,
+                    })
             except (KeyError, UserProfile.DoesNotExist):
                 return render(request, 'bunker/add_bunk.html', {
                     'form':BunkForm(), 
